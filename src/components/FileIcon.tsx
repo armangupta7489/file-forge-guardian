@@ -6,9 +6,8 @@ import {
   FileVideo,
   FileArchive,
   FileCode,
-  FilePdf,
-  Folder,
-  FileText
+  FileText,
+  Folder
 } from 'lucide-react';
 import { FileType } from '@/contexts/FileContext';
 import { cn } from '@/lib/utils';
@@ -35,7 +34,7 @@ export function FileIcon({ type, size = 40, className }: FileIconProps) {
       case 'code':
         return <FileCode size={size} className="text-file-code" />;
       case 'pdf':
-        return <FilePdf size={size} className="text-file-pdf" />;
+        return <FileText size={size} className="text-red-500" />; // Changed from FilePdf to FileText with red color
       case 'document':
         return <FileText size={size} className="text-file-document" />;
       default:
