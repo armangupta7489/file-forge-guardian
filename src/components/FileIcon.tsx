@@ -7,7 +7,10 @@ import {
   FileArchive,
   FileCode,
   FileText,
-  Folder
+  Folder,
+  Lock,
+  Shield,
+  FileJson
 } from 'lucide-react';
 import { FileType } from '@/contexts/FileContext';
 import { cn } from '@/lib/utils';
@@ -16,30 +19,52 @@ interface FileIconProps {
   type: FileType;
   size?: number;
   className?: string;
+  isEncrypted?: boolean;
 }
 
-export function FileIcon({ type, size = 40, className }: FileIconProps) {
+export function FileIcon({ type, size = 40, className, isEncrypted = false }: FileIconProps) {
   const getIcon = () => {
+    let icon;
+    
     switch (type) {
       case 'folder':
-        return <Folder size={size} className="text-yellow-500" />;
+        icon = <Folder size={size} className="text-yellow-500" />;
+        break;
       case 'image':
-        return <FileImage size={size} className="text-file-image" />;
+        icon = <FileImage size={size} className="text-file-image" />;
+        break;
       case 'video':
-        return <FileVideo size={size} className="text-file-video" />;
+        icon = <FileVideo size={size} className="text-file-video" />;
+        break;
       case 'audio':
-        return <FileAudio size={size} className="text-file-audio" />;
+        icon = <FileAudio size={size} className="text-file-audio" />;
+        break;
       case 'archive':
-        return <FileArchive size={size} className="text-file-archive" />;
+        icon = <FileArchive size={size} className="text-file-archive" />;
+        break;
       case 'code':
-        return <FileCode size={size} className="text-file-code" />;
+        icon = <FileCode size={size} className="text-file-code" />;
+        break;
       case 'pdf':
-        return <FileText size={size} className="text-red-500" />; // Changed from FilePdf to FileText with red color
+        icon = <FileText size={size} className="text-red-500" />; // Using FileText with red color for PDFs
+        break;
       case 'document':
-        return <FileText size={size} className="text-file-document" />;
+        icon = <FileText size={size} className="text-file-document" />;
+        break;
       default:
-        return <File size={size} className="text-gray-500" />;
+        icon = <File size={size} className="text-gray-500" />;
     }
+    
+    return (
+      <div className="relative">
+        {icon}
+        {isEncrypted && (
+          <div className="absolute -top-1 -right-1 bg-purple-100 rounded-full p-0.5">
+            <Lock size={size/3} className="text-purple-700" />
+          </div>
+        )}
+      </div>
+    );
   };
 
   return (
