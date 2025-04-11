@@ -12,7 +12,7 @@ import {
   Shield,
   FileJson
 } from 'lucide-react';
-import { FileType } from '@/contexts/FileContext';
+import { FileType } from '@/types/file-types';
 import { cn } from '@/lib/utils';
 
 interface FileIconProps {
