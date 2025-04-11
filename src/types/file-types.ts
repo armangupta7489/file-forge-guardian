@@ -1,6 +1,4 @@
 
-import { FileType } from '@/contexts/FileContext';
-
 export type FileType = 'folder' | 'document' | 'image' | 'video' | 'audio' | 'archive' | 'code' | 'pdf' | 'unknown';
 
 export interface FileItem {

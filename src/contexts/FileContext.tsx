@@ -1,4 +1,3 @@
-
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import { FileItem, UserRole, FileContextType } from '@/types/file-types';
 import { DEFAULT_FILES, DEFAULT_ROLES } from '@/constants/file-constants';
@@ -6,9 +5,6 @@ import { useFileOperations } from '@/hooks/useFileOperations';
 import { useFileNavigation } from '@/hooks/useFileNavigation';
 import { useAdvancedFileOperations } from '@/hooks/useAdvancedFileOperations';
 import { useFileContentOperations } from '@/hooks/useFileContentOperations';
-
-// Remove the old types as they're now in their own file
-export type { FileType } from '@/types/file-types';
 
 const FileContext = createContext<FileContextType | undefined>(undefined);
 
@@ -28,7 +24,6 @@ export const FileProvider: React.FC<{ children: React.ReactNode }> = ({ children
   const [roles] = useState<UserRole[]>(DEFAULT_ROLES);
   const [isLoading, setIsLoading] = useState(false);
   
-  // Use our custom hooks
   const fileOps = useFileOperations(files, setFiles, roles);
   
   const {

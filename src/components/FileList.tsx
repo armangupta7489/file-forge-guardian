@@ -1,6 +1,7 @@
 
 import { useState } from 'react';
-import { useFiles, FileItem } from '@/contexts/FileContext';
+import { useFiles } from '@/contexts/FileContext';
+import { FileItem } from '@/types/file-types';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { FileIcon } from './FileIcon';

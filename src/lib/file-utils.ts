@@ -1,5 +1,5 @@
 
-import { FileType } from '@/contexts/FileContext';
+import { FileType } from '@/types/file-types';
 import { formatDistanceToNow } from 'date-fns';
 
 export function getFileTypeFromName(filename: string): FileType {
