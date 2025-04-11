@@ -1,4 +1,3 @@
-
 import React, { createContext, useState, useContext, useEffect } from 'react';
 import { toast } from '@/components/ui/use-toast';
 import { encrypt, decrypt } from '@/lib/encryption';
@@ -179,8 +178,6 @@ export const FileProvider: React.FC<{ children: React.ReactNode }> = ({ children
   };
   
   const checkFileAccess = (fileId: string, action: 'read' | 'write' | 'delete' | 'encrypt') => {
-    // In a real app, we would check the current user's role against the required permissions
-    // For this demo, we'll assume the user is an admin
     const userRole = roles.find(r => r.id === 'admin');
     return userRole?.permissions[action] || false;
   };
@@ -223,10 +220,8 @@ export const FileProvider: React.FC<{ children: React.ReactNode }> = ({ children
     
     setIsLoading(true);
     setTimeout(() => {
-      // Get files to delete for logging purposes
       const filesToDelete = files.filter(f => ids.includes(f.id));
       
-      // Delete files and their children recursively
       const getAllChildIds = (parentId: string): string[] => {
         const children = files.filter(f => f.parent === parentId);
         const childrenIds = children.map(c => c.id);
@@ -428,8 +423,6 @@ export const FileProvider: React.FC<{ children: React.ReactNode }> = ({ children
     );
   };
   
-  // New functions to match the file management project requirements
-  
   const encryptFile = (id: string, password: string) => {
     const file = files.find(f => f.id === id);
     
@@ -621,13 +614,12 @@ export const FileProvider: React.FC<{ children: React.ReactNode }> = ({ children
     
     setIsLoading(true);
     setTimeout(() => {
-      // Simple mock compression - in real app would use proper compression algorithm
-      const compressedFile = {
+      const compressedFile: FileItem = {
         ...file,
         id: `${file.id}-compressed-${Date.now()}`,
         name: `${file.name}.gz`,
-        type: 'archive',
-        size: Math.ceil(file.size * 0.7), // Mock 30% compression
+        type: 'archive' as FileType,
+        size: Math.ceil(file.size * 0.7),
         modified: new Date(),
         parent: file.parent,
         content: `[Compressed content of ${file.name}]`
@@ -669,17 +661,19 @@ export const FileProvider: React.FC<{ children: React.ReactNode }> = ({ children
     
     setIsLoading(true);
     setTimeout(() => {
-      // Simple mock decompression
       const originalName = file.name.endsWith('.gz') 
         ? file.name.slice(0, -3) 
         : `decompressed_${file.name}`;
       
-      const decompressedFile = {
+      const originalFile = getFile(id.replace('-compressed-', ''));
+      const fileType: FileType = originalFile?.type || 'document';
+      
+      const decompressedFile: FileItem = {
         ...file,
         id: `${file.id}-decompressed-${Date.now()}`,
         name: originalName,
-        type: getFile(id.replace('-compressed-', ''))?.type || 'document',
-        size: Math.ceil(file.size * 1.3), // Mock decompression
+        type: fileType,
+        size: Math.ceil(file.size * 1.3),
         modified: new Date(),
         parent: file.parent,
         content: `[Decompressed content of ${file.name}]`
